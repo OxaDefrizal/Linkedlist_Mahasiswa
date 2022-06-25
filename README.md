@@ -1,2 +1,2 @@
 # Linkedlist_Mahasiswa
-Mahasiswa Management Program with linkedlist (without sorting)
+Mahasiswa Management Program with linkedlist (Nggak Bekerja)
