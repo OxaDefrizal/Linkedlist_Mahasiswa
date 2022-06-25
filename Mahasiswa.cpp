@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <stdlib.h>
 using namespace std;
 
@@ -17,11 +18,19 @@ struct Node
     Node *next;
 };
 
-Node *headNode = NULL;
+Node *headNode ;
 Node *tailNode;
 Node *currentNode = NULL;
 Node *TempNode;
 Node *newNode;
+
+template <typename T>
+void balik(T& a, T& b) {
+	T temp;
+	temp = a;
+	a = b;
+	b = temp;
+}
 
 bool isEmpty()
 {
@@ -83,7 +92,7 @@ void printNode()
     int i = 1;
     while (awalNode != NULL)
     {
-        cout << "Data pada node #" << i << " = " << awalNode->mhs.nama << endl;
+        cout << i << ". " << awalNode->mhs.nama << endl;
         awalNode = awalNode->next;         
         i++;          
     }  
@@ -121,10 +130,16 @@ void input(Mahasiswa &mhs,int count)
 }
 void sorting(Mahasiswa &mhs,int count)
 {
+    string nama[count];
+    for (int i = 0; i < count; i++)
+    {
+    nama[i] = mhs.nama[i]; 
+    }
+    int jumlah = sizeof(nama) / sizeof(nama[count]);
+
     int jika;
     string tempnama, tempnim;
 	float sort;
-
     balik:
     cout<<"Metode sorting"<<endl;
 	cout<<"1. Bubble Sort\n2. Insertion sort\n3. selection Sort"<<endl<<endl;
@@ -132,18 +147,41 @@ void sorting(Mahasiswa &mhs,int count)
 	cin>>jika;
     if(jika==1)
     {
-        
+        for (int i = 0; i < jumlah; i++)
+		    for (int j = 0; j < jumlah - 1 - i; j++)
+				//nama[j] harus lebih besar dari nama[j+1] agar nilainya 1
+				if (nama[j].compare(nama[j + 1]) < 0)
+					balik(nama[j],nama[j + 1]);//menukar nilai string nama
 		
         cout<<"\nData sudah disortir menggunakan metode bubble sort";
     }
     else if(jika==2)
     {
-        
+        int belumDisorting = jumlah;//jumlah n index yang belum disorting
+	    for (int i = 0; i <jumlah; i++)
+	    {
+		int maxmin = 0;
+		for (int j = 0; j < belumDisorting; j++)
+			if (nama[j].compare(nama[maxmin]) < 0)
+				maxmin = j;
+
+		balik(nama[maxmin], nama[belumDisorting - 1]);
+		belumDisorting--;
+	}
         cout<<"\nData sudah disortir menggunakan metode Insertion Sort";
     }
     else if(jika==3)
     {
-
+        string temp;
+	    for (int i = 0; i < jumlah; i++)
+	    {   
+		int n = i;
+		while (n>0 && ( nama[n].compare(nama[n - 1])) <=0 )
+		{
+			balik(nama[n], nama[n - 1]);
+			n--;
+		}
+	    }
         cout<<"\nData sudah disortir menggunakan metode Selection sort"; 	
 	}	
     else
